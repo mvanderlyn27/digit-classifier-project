@@ -30,7 +30,9 @@
 </template>
 
 <script>
-  import axios from 'axios'
+  import axios from 'axios';
+  import api from '../config.js';
+  console.log(api);// eslint-disable-line no-console
   export default {
     name: 'upload',
     props: {
@@ -47,18 +49,25 @@
       upload: function(){
        let formData = new FormData();
         formData.append('file', this.file);
-        axios.post( 'http:/localhost:3000/single-file',
+        this.$store.commit('setWaitingAction',true);
+        axios.post( 'http://'+api.adr+':'+api.port+'/single-file',
           formData,
           {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
           }
-      ).then(function(){
+      ).then((res)=>{
         console.log('SUCCESS!!'); // eslint-disable-line no-console
+        console.log(res.data); // eslint-disable-line no-console
+        this.$store.commit('setWaitingAction',false);
+        this.$store.commit('setResultAction',res.data.output);
+        this.$store.commit('setOPicAction',res.data.orig);
+        this.$store.commit('setSPicAction',res.data.shrunk);
       })
-      .catch(function(){
+      .catch(()=>{
         console.log('FAILURE!!'); // eslint-disable-line no-console
+        this.$store.commit('setWaitingAction',false);
       });
       },
       updateFile: function(file){
