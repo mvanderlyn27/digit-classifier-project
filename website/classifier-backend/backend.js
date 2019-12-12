@@ -18,6 +18,17 @@ app.post('/single-file', (req,res) => {
     var process = spawn('python',["./predictImage.py", 
                             ''+(req.files.file.tempFilePath+'.png').replace('images\\normal\\','')] ); 
     process.stdout.on('data', function(data) { 
+        console.log(JSON.parse(data));
+        res.send(JSON.parse(data));
+    });
+});
+app.post('/single-file-drawn', (req,res) => {
+    var spawn = require("child_process").spawn; 
+     fs.rename(req.files.file.tempFilePath,req.files.file.tempFilePath+'.png',function(err){if(err){res.status(500).send(err)}})
+    var process = spawn('python',["./predictImageDrawn.py", 
+                            ''+(req.files.file.tempFilePath+'.png').replace('images\\normal\\','')] ); 
+    process.stdout.on('data', function(data) { 
+        console.log(JSON.parse(data));
         res.send(JSON.parse(data));
     });
 });

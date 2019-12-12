@@ -9,11 +9,29 @@ const store = new Vuex.Store({
   debug: true,
   state: {
     waiting: false,
+    view_upload: true,
+    view_draw: false,
+    view_result: false,
     result: null,
     orig_pic: null,
     shrunk_pic:null,
   },
   mutations:{
+    viewUpload(state){
+      state.view_upload=true;
+      state.view_draw =false;
+      state.view_result=false;
+    },
+    viewDraw(state){
+      state.view_upload=false;
+      state.view_draw =true;
+      state.view_result=false;
+    },
+    viewResult(state){
+      state.view_upload=false;
+      state.view_draw =false;
+      state.view_result=true;
+    },
    setWaitingAction (state,newValue) {
     if (this.debug) console.log('setWaitingAction triggered with', newValue)// eslint-disable-line no-console
     state.waiting = newValue
@@ -25,6 +43,13 @@ const store = new Vuex.Store({
   setResultAction (state,newValue) {
     if (this.debug) console.log('setResultAction triggered with', newValue)// eslint-disable-line no-console
     state.result = newValue
+  },
+  setResultAndView(state,newValue){
+    if (this.debug) console.log('setResultAction triggered with', newValue)// eslint-disable-line no-console
+    state.result = newValue;
+    state.view_upload=false;
+      state.view_draw =false;
+      state.view_result=true;
   },
   clearResultAction (state) {
     if (this.debug) console.log('clearResultAction triggered')// eslint-disable-line no-console

@@ -61,7 +61,7 @@
         console.log('SUCCESS!!'); // eslint-disable-line no-console
         console.log(res.data); // eslint-disable-line no-console
         this.$store.commit('setWaitingAction',false);
-        this.$store.commit('setResultAction',res.data.output);
+        this.$store.commit('setResultAndView',res.data.output);
         this.$store.commit('setOPicAction',res.data.orig);
         this.$store.commit('setSPicAction',res.data.shrunk);
       })

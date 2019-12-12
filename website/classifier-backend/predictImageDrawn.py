@@ -56,8 +56,8 @@ def convert_img(img_path):
     original_image = original_image.convert('L')
     inverted_image = ImageOps.invert(original_image)
     size = (28, 28)
-    img = inverted_image.resize(size)
-    img.save('./images/shrunk/'+img_path)
+    img = original_image.resize(size)
+    inverted_image.resize(size).save('./images/shrunk/'+img_path)
     data = np.asarray(img.getdata()).flatten()
     return data
 def main():
